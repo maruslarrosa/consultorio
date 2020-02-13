@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react';
+import uuid from 'uuid/v4';
 
-const Formulario = () => {
+const Formulario = ({crearCita}) => {
 
     // crear state de form
     const [cita, actualizarCita] = useState({
@@ -33,10 +34,20 @@ const Formulario = () => {
             || hora.trim() === ""
             || sintomas.trim() === "") {
             actualizarError(true);
+            return;
         }
-        else {
-            actualizarError(false);
-        }
+        
+        actualizarError(false);
+        cita.id = uuid();
+        crearCita(cita);
+        //El form se reinicia porque tengo bindeadas las variables de cita al form
+        actualizarCita({
+            mascota: '',
+            propietario: '',
+            fecha: '',
+            hora: '',
+            sintomas: ''
+        });
     }
 
     return (
@@ -44,8 +55,8 @@ const Formulario = () => {
             <h2>Crear Cita</h2>
 
             {error ? <p className="alerta-error">Todos los campos son obligatorios</p>
-            : null}
-            
+                : null}
+
             <form
                 onSubmit={submitCita}
             >
