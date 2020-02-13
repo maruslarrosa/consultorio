@@ -5,13 +5,13 @@ import Cita from './components/Cita';
 function App() {
 
   let citasIniciales = JSON.parse(localStorage.getItem('citas'));
-  if(!citasIniciales) {
+  if (!citasIniciales) {
     citasIniciales = [];
   }
   // Listado de Citas
   const [citas, guardarCitas] = useState(citasIniciales);
 
-  useEffect( () => {
+  useEffect(() => {
     localStorage.setItem('citas', JSON.stringify(citas));
   }, [citas])
 
